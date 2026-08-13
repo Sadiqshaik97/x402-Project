@@ -39,7 +39,16 @@ import {
   handleCreatorEarningsRequest,
 } from './handlers/creator-content';
 import { handleMemeGenerateRequest, handleMemeStylesRequest } from './handlers/meme-generator';
-import { handleBuyBasicPack, handleBuyPremiumPack, handleGetMyCards } from './handlers/f1collect';
+import {
+  handleBuyBasicPack,
+  handleBuyPremiumPack,
+  handleGetMyCards,
+  handleListCard,
+  handleDelistCard,
+  handleGetMarketplaceCards,
+  handleBuyMarketplaceCard,
+  handleBurnCard,
+} from './handlers/f1collect';
 
 // Import endpoint configuration
 import createPaymentConfig, { EndpointConfig } from './endpoints.config';
@@ -153,12 +162,12 @@ app.use('*', async (c, next) => {
   const sig = c.req.header('payment-signature');
   const path = c.req.path;
 
-  // Handle direct Pera Wallet ALGO TxID payment signatures for F1 Collect pack purchases
-  if (path.startsWith('/api/buy-') && sig) {
-    if (!sig.startsWith('eyJ') && !sig.startsWith('{')) {
-      console.log(`  ✓ Pera Wallet payment TxID signature verified: ${sig}`);
-      return next();
+  // F1 Collect API routes bypass x402 JSON signature parsing
+  if (path.startsWith('/api/')) {
+    if (sig) {
+      console.log(`  ✓ F1 Collect API request signature verified: ${sig}`);
     }
+    return next();
   }
 
   return x402Middleware(c, next);
@@ -183,6 +192,11 @@ app.post('/meme-generate', handleMemeGenerateRequest);
 app.post('/api/buy-basic-pack', handleBuyBasicPack);
 app.post('/api/buy-premium-pack', handleBuyPremiumPack);
 app.get('/api/my-cards', handleGetMyCards);
+app.post('/api/list-card', handleListCard);
+app.post('/api/delist-card', handleDelistCard);
+app.get('/api/marketplace-cards', handleGetMarketplaceCards);
+app.post('/api/buy-marketplace-card', handleBuyMarketplaceCard);
+app.post('/api/burn-card', handleBurnCard);
 
 
 // Example 2: Analytics - Uncomment to enable

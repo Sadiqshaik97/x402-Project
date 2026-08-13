@@ -20,6 +20,9 @@ export interface F1Card {
   assetId?: number;
   txId?: string;
   loraUrl?: string;
+  isListed?: boolean;
+  priceAlgo?: number;
+  listedAt?: string;
 }
 
 const CARDS_FILE_PATH = path.join(process.cwd(), 'user-cards.json');
@@ -116,7 +119,6 @@ const DRIVERS_DB: Omit<F1Card, 'id' | 'mintedAt' | 'packType'>[] = [
   },
 ];
 
-// In-memory store initialized from persistent file
 const algodClient = new algosdk.Algodv2('', 'https://testnet-api.algonode.cloud', '');
 
 async function mintNFTOnChain(driverName: string, recipientAddress?: string): Promise<{ assetId?: number; txId?: string; loraUrl?: string }> {
@@ -168,6 +170,42 @@ async function mintNFTOnChain(driverName: string, recipientAddress?: string): Pr
   }
 }
 
+async function burnNFTOnChain(assetId?: number): Promise<{ txId?: string; loraUrl?: string }> {
+  try {
+    const mnemonicStr = process.env.MINTER_MNEMONIC;
+    if (!mnemonicStr || !assetId) {
+      console.warn('⚠️ MINTER_MNEMONIC or assetId missing. Skipping on-chain ASA destroy.');
+      return {};
+    }
+
+    const minterAccount = algosdk.mnemonicToSecretKey(mnemonicStr);
+    const params = await algodClient.getTransactionParams().do();
+
+    const note = new TextEncoder().encode(`F1 Collect NFT Burned: Asset ${assetId}`);
+    const txn = algosdk.makeAssetDestroyTxnWithSuggestedParamsFromObject({
+      sender: minterAccount.addr,
+      assetIndex: assetId,
+      note,
+      suggestedParams: params,
+    });
+
+    const signedTxn = txn.signTxn(minterAccount.sk);
+    const { txid } = await algodClient.sendRawTransaction(signedTxn).do();
+    console.log(`🔥 Broadcasted ASA Destroy/Burn TxID: ${txid}`);
+
+    await algosdk.waitForConfirmation(algodClient, txid, 4);
+    console.log(`🔥 On-Chain F1 NFT ASA Destroyed! Asset ID: ${assetId}, TxID: ${txid}`);
+
+    return {
+      txId: txid,
+      loraUrl: `https://testnet.lora.algokit.io/transaction/${txid}`,
+    };
+  } catch (error) {
+    console.error('Failed to destroy ASA on-chain:', error);
+    return {};
+  }
+}
+
 export async function handleBuyBasicPack(c: Context) {
   try {
     const userAddress = c.req.header('x-user-address') || c.req.query('address') || 'ANONYMOUS';
@@ -191,8 +229,9 @@ export async function handleBuyBasicPack(c: Context) {
       loraUrl: onChainResult.loraUrl,
     };
 
-    userCardsStore.push(mintedCard);
-    savePersistedCards(userCardsStore);
+    const currentCards = loadPersistedCards();
+    currentCards.push(mintedCard);
+    savePersistedCards(currentCards);
 
     return c.json({
       success: true,
@@ -230,8 +269,9 @@ export async function handleBuyPremiumPack(c: Context) {
       loraUrl: onChainResult.loraUrl,
     };
 
-    userCardsStore.push(mintedCard);
-    savePersistedCards(userCardsStore);
+    const currentCards = loadPersistedCards();
+    currentCards.push(mintedCard);
+    savePersistedCards(currentCards);
 
     return c.json({
       success: true,
@@ -259,4 +299,154 @@ export async function handleGetMyCards(c: Context) {
     totalCards: cards.length,
     cards: cards,
   });
+}
+
+export async function handleListCard(c: Context) {
+  try {
+    const body = await c.req.json().catch(() => ({}));
+    const { cardId, priceAlgo } = body;
+
+    if (!cardId || !priceAlgo) {
+      return c.json({ error: 'cardId and priceAlgo are required' }, 400);
+    }
+
+    const allCards = loadPersistedCards();
+    const card = allCards.find((c) => c.id === cardId);
+
+    if (!card) {
+      return c.json({ error: 'Card not found' }, 404);
+    }
+
+    card.isListed = true;
+    card.priceAlgo = Number(priceAlgo);
+    card.listedAt = new Date().toISOString();
+
+    savePersistedCards(allCards);
+
+    return c.json({
+      success: true,
+      message: `Card ${card.driver} listed on marketplace for ${card.priceAlgo} ALGO`,
+      card,
+    });
+  } catch (error) {
+    console.error('Error listing card:', error);
+    return c.json({ error: 'Failed to list card' }, 500);
+  }
+}
+
+export async function handleDelistCard(c: Context) {
+  try {
+    const body = await c.req.json().catch(() => ({}));
+    const { cardId } = body;
+
+    if (!cardId) {
+      return c.json({ error: 'cardId is required' }, 400);
+    }
+
+    const allCards = loadPersistedCards();
+    const card = allCards.find((c) => c.id === cardId);
+
+    if (!card) {
+      return c.json({ error: 'Card not found' }, 404);
+    }
+
+    card.isListed = false;
+    card.priceAlgo = undefined;
+    card.listedAt = undefined;
+
+    savePersistedCards(allCards);
+
+    return c.json({
+      success: true,
+      message: `Card ${card.driver} delisted from marketplace`,
+      card,
+    });
+  } catch (error) {
+    console.error('Error delisting card:', error);
+    return c.json({ error: 'Failed to delist card' }, 500);
+  }
+}
+
+export async function handleGetMarketplaceCards(c: Context) {
+  const allCards = loadPersistedCards();
+  const listedUserCards = allCards.filter((card) => card.isListed);
+
+  return c.json({
+    totalCards: listedUserCards.length,
+    cards: listedUserCards,
+  });
+}
+
+export async function handleBuyMarketplaceCard(c: Context) {
+  try {
+    const body = await c.req.json().catch(() => ({}));
+    const { cardId, buyerAddress } = body;
+
+    if (!cardId || !buyerAddress) {
+      return c.json({ error: 'cardId and buyerAddress are required' }, 400);
+    }
+
+    const allCards = loadPersistedCards();
+    const card = allCards.find((c) => c.id === cardId);
+
+    if (!card) {
+      return c.json({ error: 'Card not found' }, 404);
+    }
+
+    const previousOwner = card.owner;
+    card.owner = buyerAddress;
+    card.isListed = false;
+    card.priceAlgo = undefined;
+    card.listedAt = undefined;
+
+    savePersistedCards(allCards);
+
+    return c.json({
+      success: true,
+      message: `Successfully purchased ${card.driver} NFT from marketplace!`,
+      card,
+      previousOwner,
+    });
+  } catch (error) {
+    console.error('Error buying marketplace card:', error);
+    return c.json({ error: 'Failed to purchase marketplace card' }, 500);
+  }
+}
+
+export async function handleBurnCard(c: Context) {
+  try {
+    const body = await c.req.json().catch(() => ({}));
+    const cardId = body.cardId || c.req.query('cardId');
+
+    if (!cardId) {
+      return c.json({ error: 'Missing cardId' }, 400);
+    }
+
+    const allCards = loadPersistedCards();
+    const index = allCards.findIndex((card) => card.id === cardId);
+
+    if (index === -1) {
+      return c.json({ error: 'Card not found' }, 404);
+    }
+
+    const targetCard = allCards[index];
+
+    // Execute on-chain ASA destroy if assetId exists
+    const burnResult = await burnNFTOnChain(targetCard.assetId);
+
+    // Remove from array and persist
+    allCards.splice(index, 1);
+    savePersistedCards(allCards);
+
+    return c.json({
+      success: true,
+      message: `Card ${targetCard.driver} (#${targetCard.number}) successfully burned on-chain!`,
+      burnedCardId: cardId,
+      txId: burnResult.txId,
+      loraUrl: burnResult.loraUrl,
+    });
+  } catch (error) {
+    console.error('Error burning card:', error);
+    return c.json({ error: 'Failed to burn card' }, 500);
+  }
 }

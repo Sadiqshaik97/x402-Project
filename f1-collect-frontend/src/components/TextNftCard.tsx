@@ -9,8 +9,11 @@ export interface TextNftCardProps {
   description: string;
   edition: number;
   maxEdition?: number;
+  isListed?: boolean;
+  priceAlgo?: number;
   onBurn?: (id: string) => void;
   onList?: (id: string) => void;
+  onDelist?: (id: string) => void;
 }
 
 export default function TextNftCard({
@@ -21,8 +24,11 @@ export default function TextNftCard({
   description,
   edition,
   maxEdition = 1000,
+  isListed,
+  priceAlgo,
   onBurn,
-  onList
+  onList,
+  onDelist,
 }: TextNftCardProps) {
   // Determine gradient color class based on rarity
   const getGradientClass = (rarityLevel: string) => {
@@ -42,11 +48,18 @@ export default function TextNftCard({
       whileHover={{ y: -5, scale: 1.02 }}
       className={`relative w-full h-80 rounded-2xl overflow-hidden flex flex-col p-6 shadow-2xl ${getGradientClass(rarity)}`}
     >
-      {/* Top section: Rarity Badge and Edition */}
+      {/* Top section: Rarity Badge, Listed Status, and Edition */}
       <div className="flex justify-between items-start z-10">
-        <span className="bg-black/40 backdrop-blur-sm text-white px-3 py-1 rounded text-xs font-bold uppercase tracking-wider border border-white/10">
-          {rarity}
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="bg-black/40 backdrop-blur-sm text-white px-3 py-1 rounded text-xs font-bold uppercase tracking-wider border border-white/10">
+            {rarity}
+          </span>
+          {isListed && (
+            <span className="bg-yellow-500/90 text-black font-black px-2 py-1 rounded text-xs uppercase tracking-wider">
+              {priceAlgo} ALGO
+            </span>
+          )}
+        </div>
         <span className="text-white/80 font-mono text-sm bg-black/20 px-2 py-1 rounded">
           #{edition}/{maxEdition}
         </span>
@@ -68,15 +81,24 @@ export default function TextNftCard({
           {description}
         </p>
         
-        {(onBurn || onList) && (
+        {(onBurn || onList || onDelist) && (
           <div className="flex gap-2">
-            {onList && (
+            {isListed && onDelist ? (
               <button 
-                onClick={() => onList(id)}
-                className="flex-1 bg-white text-black py-2 rounded text-xs font-bold uppercase tracking-wider hover:bg-gray-200 transition-colors"
+                onClick={() => onDelist(id)}
+                className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-black py-2 rounded text-xs font-bold uppercase tracking-wider transition-colors"
               >
-                List
+                Delist
               </button>
+            ) : (
+              onList && (
+                <button 
+                  onClick={() => onList(id)}
+                  className="flex-1 bg-white text-black py-2 rounded text-xs font-bold uppercase tracking-wider hover:bg-gray-200 transition-colors"
+                >
+                  List
+                </button>
+              )
             )}
             {onBurn && (
               <button 

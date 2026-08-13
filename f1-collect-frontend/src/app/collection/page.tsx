@@ -27,14 +27,21 @@ export default function Collection() {
   const { activeAddress } = useWallet();
   const [cards, setCards] = useState<F1CardData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    if (!activeAddress) return;
+    setIsMounted(true);
+  }, []);
+
+  const address = isMounted ? activeAddress : null;
+
+  useEffect(() => {
+    if (!address) return;
 
     async function fetchUserCards() {
       try {
         setLoading(true);
-        const res = await fetch(`http://localhost:4021/api/my-cards?address=${activeAddress}`);
+        const res = await fetch(`http://localhost:4021/api/my-cards?address=${address}`);
         const data = await res.json();
         if (data.cards) {
           setCards(data.cards);
@@ -47,7 +54,7 @@ export default function Collection() {
     }
 
     fetchUserCards();
-  }, [activeAddress]);
+  }, [address]);
 
   const handleBurn = (id: string) => {
     alert(`Initiating on-chain burn for card ${id}...`);
@@ -57,7 +64,7 @@ export default function Collection() {
     alert(`Listing card ${id} on the marketplace...`);
   };
 
-  if (!activeAddress) {
+  if (!isMounted || !address) {
     return (
       <div className="min-h-screen bg-[#0d0d14] flex flex-col items-center justify-center py-20 px-4 text-white">
         <div className="text-6xl mb-6">🔒</div>

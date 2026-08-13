@@ -4,13 +4,21 @@ import Link from "next/link";
 import { useWallet, WalletId } from "@txnlab/use-wallet-react";
 import { ArrowRight, Wallet } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const { activeAddress, wallets } = useWallet();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const currentAddress = isMounted ? activeAddress : null;
   const peraWallet = wallets?.find((w) => w.id === WalletId.PERA);
 
   const handleConnect = () => {
-    if (!activeAddress) {
+    if (!currentAddress) {
       peraWallet?.connect();
     }
   };
@@ -60,7 +68,7 @@ export default function Home() {
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </Link>
 
-              {!activeAddress ? (
+              {!currentAddress ? (
                 <button 
                   onClick={handleConnect}
                   className="group inline-flex items-center justify-center gap-3 bg-white text-black px-8 py-4 text-sm font-bold uppercase tracking-wider hover:bg-gray-200 transition-colors rounded-sm"

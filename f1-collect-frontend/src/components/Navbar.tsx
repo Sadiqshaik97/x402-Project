@@ -3,18 +3,24 @@
 import Link from "next/link";
 import { useWallet, WalletId } from "@txnlab/use-wallet-react";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const { activeAddress, wallets } = useWallet();
   const [isOpen, setIsOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const pathname = usePathname();
 
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const currentAddress = isMounted ? activeAddress : null;
   const peraWallet = wallets?.find((w) => w.id === WalletId.PERA);
 
   const handleConnect = async () => {
-    if (activeAddress) {
+    if (currentAddress) {
       peraWallet?.disconnect();
     } else {
       peraWallet?.connect();
@@ -63,15 +69,15 @@ export default function Navbar() {
             <button
               onClick={handleConnect}
               className={`hidden sm:flex items-center gap-2 px-6 py-2.5 rounded text-sm font-bold uppercase tracking-wider transition-all ${
-                activeAddress
+                currentAddress
                   ? "bg-white/10 text-white hover:bg-white/20"
                   : "bg-[#E10600] text-white hover:bg-[#b80500]"
               }`}
             >
-              {activeAddress ? (
+              {currentAddress ? (
                 <>
                   <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  {activeAddress.slice(0, 4)}...{activeAddress.slice(-4)}
+                  {currentAddress.slice(0, 4)}...{currentAddress.slice(-4)}
                 </>
               ) : (
                 "Connect Wallet"
@@ -109,7 +115,7 @@ export default function Navbar() {
                 onClick={handleConnect}
                 className="w-full flex justify-center items-center gap-2 px-6 py-3 rounded bg-[#E10600] text-white text-base font-bold uppercase tracking-wider"
               >
-                {activeAddress ? `Disconnect (${activeAddress.slice(0, 4)}...${activeAddress.slice(-4)})` : "Connect Wallet"}
+                {currentAddress ? `Disconnect (${currentAddress.slice(0, 4)}...${currentAddress.slice(-4)})` : "Connect Wallet"}
               </button>
             </div>
           </div>
@@ -118,3 +124,4 @@ export default function Navbar() {
     </header>
   );
 }
+

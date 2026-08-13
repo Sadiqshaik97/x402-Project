@@ -1,5 +1,7 @@
 import type { Context } from 'hono';
 import algosdk from 'algosdk';
+import fs from 'fs';
+import path from 'path';
 
 export interface F1Card {
   id: string;
@@ -19,6 +21,31 @@ export interface F1Card {
   txId?: string;
   loraUrl?: string;
 }
+
+const CARDS_FILE_PATH = path.join(process.cwd(), 'user-cards.json');
+
+function loadPersistedCards(): F1Card[] {
+  try {
+    if (fs.existsSync(CARDS_FILE_PATH)) {
+      const data = fs.readFileSync(CARDS_FILE_PATH, 'utf-8');
+      return JSON.parse(data);
+    }
+  } catch (err) {
+    console.error('Failed to load user-cards.json:', err);
+  }
+  return [];
+}
+
+function savePersistedCards(cards: F1Card[]) {
+  try {
+    fs.writeFileSync(CARDS_FILE_PATH, JSON.stringify(cards, null, 2), 'utf-8');
+  } catch (err) {
+    console.error('Failed to save user-cards.json:', err);
+  }
+}
+
+// In-memory store initialized from persistent file
+const userCardsStore: F1Card[] = loadPersistedCards();
 
 const DRIVERS_DB: Omit<F1Card, 'id' | 'mintedAt' | 'packType'>[] = [
   {
@@ -89,9 +116,7 @@ const DRIVERS_DB: Omit<F1Card, 'id' | 'mintedAt' | 'packType'>[] = [
   },
 ];
 
-// In-memory store for demo
-const userCardsStore: F1Card[] = [];
-
+// In-memory store initialized from persistent file
 const algodClient = new algosdk.Algodv2('', 'https://testnet-api.algonode.cloud', '');
 
 async function mintNFTOnChain(driverName: string, recipientAddress?: string): Promise<{ assetId?: number; txId?: string; loraUrl?: string }> {
@@ -167,6 +192,7 @@ export async function handleBuyBasicPack(c: Context) {
     };
 
     userCardsStore.push(mintedCard);
+    savePersistedCards(userCardsStore);
 
     return c.json({
       success: true,
@@ -205,6 +231,7 @@ export async function handleBuyPremiumPack(c: Context) {
     };
 
     userCardsStore.push(mintedCard);
+    savePersistedCards(userCardsStore);
 
     return c.json({
       success: true,
@@ -222,9 +249,10 @@ export async function handleBuyPremiumPack(c: Context) {
 export async function handleGetMyCards(c: Context) {
   const userAddress = c.req.query('address') || c.req.header('x-user-address');
   
-  let cards = userCardsStore;
+  const currentCards = loadPersistedCards();
+  let cards = currentCards;
   if (userAddress && userAddress !== 'ANONYMOUS') {
-    cards = userCardsStore.filter(c => !c.owner || c.owner === userAddress || c.owner === 'ANONYMOUS');
+    cards = currentCards.filter(card => !card.owner || card.owner === userAddress || card.owner === 'ANONYMOUS');
   }
 
   return c.json({

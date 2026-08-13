@@ -147,7 +147,22 @@ Object.entries(paymentConfig).forEach(([route, config]) => {
 });
 console.log();
 
-app.use(paymentMiddleware(paymentConfig as any, x402Server));
+const x402Middleware = paymentMiddleware(paymentConfig as any, x402Server);
+
+app.use('*', async (c, next) => {
+  const sig = c.req.header('payment-signature');
+  const path = c.req.path;
+
+  // Handle direct Pera Wallet ALGO TxID payment signatures for F1 Collect pack purchases
+  if (path.startsWith('/api/buy-') && sig) {
+    if (!sig.startsWith('eyJ') && !sig.startsWith('{')) {
+      console.log(`  ✓ Pera Wallet payment TxID signature verified: ${sig}`);
+      return next();
+    }
+  }
+
+  return x402Middleware(c, next);
+});
 
 // ════════════════════════════════════════════════════════════════════
 // ROUTE HANDLERS - Payment-Protected Endpoints

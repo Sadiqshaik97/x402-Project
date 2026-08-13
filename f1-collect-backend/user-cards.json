@@ -1,0 +1,20 @@
+[
+  {
+    "driver": "Fernando Alonso",
+    "team": "Aston Martin",
+    "number": 14,
+    "rarity": "Rare",
+    "topSpeed": 349,
+    "acceleration": 2.3,
+    "corneringG": 4.85,
+    "championships": 2,
+    "imageUrl": "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=600&q=80",
+    "id": "F1-BASIC-1786605240593-469",
+    "mintedAt": "2026-08-13T07:14:00.593Z",
+    "packType": "Basic",
+    "owner": "6XFYYM7O4HNHOQJULIBVJY6LFC4UNS6KWUIT23QADOS2VVFB4TYZBHDOJA",
+    "assetId": 769177884,
+    "txId": "VNY25B6MRX2M7RCBIAAMPS6UABQBNL6X7RWVFHKHFZDE7L55CYTQ",
+    "loraUrl": "https://testnet.lora.algokit.io/transaction/VNY25B6MRX2M7RCBIAAMPS6UABQBNL6X7RWVFHKHFZDE7L55CYTQ"
+  }
+]

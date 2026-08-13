@@ -33,7 +33,10 @@
     "owner": "6XFYYM7O4HNHOQJULIBVJY6LFC4UNS6KWUIT23QADOS2VVFB4TYZBHDOJA",
     "assetId": 769178458,
     "txId": "GKT7ELH5AV6XAAUIWGU35LYPTLPM7C3FJ2QGA2C3GOLR7UD3F6RQ",
-    "loraUrl": "https://testnet.lora.algokit.io/transaction/GKT7ELH5AV6XAAUIWGU35LYPTLPM7C3FJ2QGA2C3GOLR7UD3F6RQ"
+    "loraUrl": "https://testnet.lora.algokit.io/transaction/GKT7ELH5AV6XAAUIWGU35LYPTLPM7C3FJ2QGA2C3GOLR7UD3F6RQ",
+    "isListed": true,
+    "priceAlgo": 10,
+    "listedAt": "2026-08-13T08:14:14.033Z"
   },
   {
     "driver": "Fernando Alonso",
@@ -54,21 +57,39 @@
     "loraUrl": "https://testnet.lora.algokit.io/transaction/KLFJFLQUSTHLXOEXNUAIT5BU6DQ3JEOTQRAOFQBO2UDHDAXRSLAA"
   },
   {
-    "driver": "Pierre Gasly",
-    "team": "Alpine",
-    "number": 10,
-    "rarity": "Common",
-    "topSpeed": 345,
-    "acceleration": 2.4,
-    "corneringG": 4.7,
-    "championships": 0,
-    "imageUrl": "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80",
-    "id": "F1-BASIC-1786608449864-517",
-    "mintedAt": "2026-08-13T08:07:29.864Z",
+    "driver": "Fernando Alonso",
+    "team": "Aston Martin",
+    "number": 14,
+    "rarity": "Rare",
+    "topSpeed": 349,
+    "acceleration": 2.3,
+    "corneringG": 4.85,
+    "championships": 2,
+    "imageUrl": "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=600&q=80",
+    "id": "F1-BASIC-1786608822962-62",
+    "mintedAt": "2026-08-13T08:13:42.962Z",
     "packType": "Basic",
     "owner": "6XFYYM7O4HNHOQJULIBVJY6LFC4UNS6KWUIT23QADOS2VVFB4TYZBHDOJA",
-    "assetId": 769180496,
-    "txId": "6JT2RTYG5I3LMNXQ3B733VM3OZMSOL3FXH23Z6DRB2FJSXQ6HIAA",
-    "loraUrl": "https://testnet.lora.algokit.io/transaction/6JT2RTYG5I3LMNXQ3B733VM3OZMSOL3FXH23Z6DRB2FJSXQ6HIAA"
+    "assetId": 769180920,
+    "txId": "IDJ7753IJY465DDFXSYF5KWMNBEQKK33MHTUKE3X5R5UTJB3CEYA",
+    "loraUrl": "https://testnet.lora.algokit.io/transaction/IDJ7753IJY465DDFXSYF5KWMNBEQKK33MHTUKE3X5R5UTJB3CEYA"
+  },
+  {
+    "driver": "Lando Norris",
+    "team": "McLaren",
+    "number": 4,
+    "rarity": "Rare",
+    "topSpeed": 350,
+    "acceleration": 2.25,
+    "corneringG": 4.9,
+    "championships": 0,
+    "imageUrl": "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=600&q=80",
+    "id": "F1-BASIC-1786608836441-534",
+    "mintedAt": "2026-08-13T08:13:56.441Z",
+    "packType": "Basic",
+    "owner": "6XFYYM7O4HNHOQJULIBVJY6LFC4UNS6KWUIT23QADOS2VVFB4TYZBHDOJA",
+    "assetId": 769180934,
+    "txId": "RAT5FTEP4BFXYIJ4FVITYN3EHHW6KBEFLF57THJ6M56A65DPSO3Q",
+    "loraUrl": "https://testnet.lora.algokit.io/transaction/RAT5FTEP4BFXYIJ4FVITYN3EHHW6KBEFLF57THJ6M56A65DPSO3Q"
   }
 ]

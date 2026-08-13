@@ -1,0 +1,1542 @@
+#pragma version 10
+
+collect_contract.CollectContract.approval_program:
+    intcblock 1 0 4 41
+    bytecblock 0x151f7c75 0x61646d696e 0x00 0x6d696e746572 0x746f74616c5f6361726473 0x746f74616c5f6d696e746564 0x6c697374696e675f636f756e74 0x636172645f 0x0029 0x80 0x6c6973745f 0x6275726e5f
+    callsub __puya_arc4_router__
+    return
+
+
+// collect_contract.CollectContract.__puya_arc4_router__() -> uint64:
+__puya_arc4_router__:
+    // smart_contracts/collect_contract.py:82
+    // class CollectContract(ARC4Contract):
+    proto 0 1
+    txn NumAppArgs
+    bz __puya_arc4_router___after_if_else@21
+    pushbytess 0xa949d419 0x5b55e025 0xff394aa1 0x40d11c32 0x66e9f866 0x63d55b6c 0x09276901 0x520d961c 0x5c52a982 0xdae542cd 0x22e4c5a0 0xd522bc9d 0xd9f5dd4d 0x025b0fa5 0x346b3dbc 0xfd4cda16 // method "create_application(account)void", method "create_card_template(string,string,string,string,uint64,uint64,pay)uint64", method "mint_card(uint64,account)uint64", method "burn_card(uint64,axfer)void", method "list_for_sale(uint64,uint64,uint64,axfer)uint64", method "cancel_listing(uint64)void", method "set_minter(account)void", method "deactivate_card(uint64)void", method "get_card_template(uint64)(string,string,string,string,uint64,uint64,uint64,uint64,bool)", method "get_total_cards()uint64", method "get_total_minted()uint64", method "is_burned(uint64)bool", method "get_listing(uint64)(address,uint64,uint64,uint64,bool)", method "get_total_listings()uint64", method "get_admin()address", method "get_minter()address"
+    txna ApplicationArgs 0
+    match __puya_arc4_router___create_application_route@2 __puya_arc4_router___create_card_template_route@3 __puya_arc4_router___mint_card_route@4 __puya_arc4_router___burn_card_route@5 __puya_arc4_router___list_for_sale_route@6 __puya_arc4_router___cancel_listing_route@7 __puya_arc4_router___set_minter_route@8 __puya_arc4_router___deactivate_card_route@9 __puya_arc4_router___get_card_template_route@10 __puya_arc4_router___get_total_cards_route@11 __puya_arc4_router___get_total_minted_route@12 __puya_arc4_router___is_burned_route@13 __puya_arc4_router___get_listing_route@14 __puya_arc4_router___get_total_listings_route@15 __puya_arc4_router___get_admin_route@16 __puya_arc4_router___get_minter_route@17
+    intc_1 // 0
+    retsub
+
+__puya_arc4_router___create_application_route@2:
+    // smart_contracts/collect_contract.py:105
+    // @arc4.abimethod(allow_actions=["NoOp"], create="require")
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    !
+    assert // is creating
+    // smart_contracts/collect_contract.py:82
+    // class CollectContract(ARC4Contract):
+    txna ApplicationArgs 1
+    btoi
+    txnas Accounts
+    // smart_contracts/collect_contract.py:105
+    // @arc4.abimethod(allow_actions=["NoOp"], create="require")
+    callsub create_application
+    intc_0 // 1
+    retsub
+
+__puya_arc4_router___create_card_template_route@3:
+    // smart_contracts/collect_contract.py:125
+    // @arc4.abimethod
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    // smart_contracts/collect_contract.py:82
+    // class CollectContract(ARC4Contract):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    txna ApplicationArgs 3
+    txna ApplicationArgs 4
+    txna ApplicationArgs 5
+    txna ApplicationArgs 6
+    txn GroupIndex
+    intc_0 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_0 // pay
+    ==
+    assert // transaction type is pay
+    // smart_contracts/collect_contract.py:125
+    // @arc4.abimethod
+    callsub create_card_template
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    retsub
+
+__puya_arc4_router___mint_card_route@4:
+    // smart_contracts/collect_contract.py:200
+    // @arc4.abimethod
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    // smart_contracts/collect_contract.py:82
+    // class CollectContract(ARC4Contract):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txnas Accounts
+    // smart_contracts/collect_contract.py:200
+    // @arc4.abimethod
+    callsub mint_card
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    retsub
+
+__puya_arc4_router___burn_card_route@5:
+    // smart_contracts/collect_contract.py:260
+    // @arc4.abimethod
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    // smart_contracts/collect_contract.py:82
+    // class CollectContract(ARC4Contract):
+    txna ApplicationArgs 1
+    txn GroupIndex
+    intc_0 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_2 // axfer
+    ==
+    assert // transaction type is axfer
+    // smart_contracts/collect_contract.py:260
+    // @arc4.abimethod
+    callsub burn_card
+    intc_0 // 1
+    retsub
+
+__puya_arc4_router___list_for_sale_route@6:
+    // smart_contracts/collect_contract.py:285
+    // @arc4.abimethod
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    // smart_contracts/collect_contract.py:82
+    // class CollectContract(ARC4Contract):
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    txna ApplicationArgs 3
+    txn GroupIndex
+    intc_0 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_2 // axfer
+    ==
+    assert // transaction type is axfer
+    // smart_contracts/collect_contract.py:285
+    // @arc4.abimethod
+    callsub list_for_sale
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    retsub
+
+__puya_arc4_router___cancel_listing_route@7:
+    // smart_contracts/collect_contract.py:324
+    // @arc4.abimethod
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    // smart_contracts/collect_contract.py:82
+    // class CollectContract(ARC4Contract):
+    txna ApplicationArgs 1
+    // smart_contracts/collect_contract.py:324
+    // @arc4.abimethod
+    callsub cancel_listing
+    intc_0 // 1
+    retsub
+
+__puya_arc4_router___set_minter_route@8:
+    // smart_contracts/collect_contract.py:361
+    // @arc4.abimethod
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    // smart_contracts/collect_contract.py:82
+    // class CollectContract(ARC4Contract):
+    txna ApplicationArgs 1
+    btoi
+    txnas Accounts
+    // smart_contracts/collect_contract.py:361
+    // @arc4.abimethod
+    callsub set_minter
+    intc_0 // 1
+    retsub
+
+__puya_arc4_router___deactivate_card_route@9:
+    // smart_contracts/collect_contract.py:367
+    // @arc4.abimethod
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    // smart_contracts/collect_contract.py:82
+    // class CollectContract(ARC4Contract):
+    txna ApplicationArgs 1
+    // smart_contracts/collect_contract.py:367
+    // @arc4.abimethod
+    callsub deactivate_card
+    intc_0 // 1
+    retsub
+
+__puya_arc4_router___get_card_template_route@10:
+    // smart_contracts/collect_contract.py:389
+    // @arc4.abimethod(readonly=True)
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    // smart_contracts/collect_contract.py:82
+    // class CollectContract(ARC4Contract):
+    txna ApplicationArgs 1
+    // smart_contracts/collect_contract.py:389
+    // @arc4.abimethod(readonly=True)
+    callsub get_card_template
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    retsub
+
+__puya_arc4_router___get_total_cards_route@11:
+    // smart_contracts/collect_contract.py:395
+    // @arc4.abimethod(readonly=True)
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    callsub get_total_cards
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    retsub
+
+__puya_arc4_router___get_total_minted_route@12:
+    // smart_contracts/collect_contract.py:400
+    // @arc4.abimethod(readonly=True)
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    callsub get_total_minted
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    retsub
+
+__puya_arc4_router___is_burned_route@13:
+    // smart_contracts/collect_contract.py:405
+    // @arc4.abimethod(readonly=True)
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    // smart_contracts/collect_contract.py:82
+    // class CollectContract(ARC4Contract):
+    txna ApplicationArgs 1
+    // smart_contracts/collect_contract.py:405
+    // @arc4.abimethod(readonly=True)
+    callsub is_burned
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    retsub
+
+__puya_arc4_router___get_listing_route@14:
+    // smart_contracts/collect_contract.py:412
+    // @arc4.abimethod(readonly=True)
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    // smart_contracts/collect_contract.py:82
+    // class CollectContract(ARC4Contract):
+    txna ApplicationArgs 1
+    // smart_contracts/collect_contract.py:412
+    // @arc4.abimethod(readonly=True)
+    callsub get_listing
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    retsub
+
+__puya_arc4_router___get_total_listings_route@15:
+    // smart_contracts/collect_contract.py:418
+    // @arc4.abimethod(readonly=True)
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    callsub get_total_listings
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    retsub
+
+__puya_arc4_router___get_admin_route@16:
+    // smart_contracts/collect_contract.py:423
+    // @arc4.abimethod(readonly=True)
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    callsub get_admin
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    retsub
+
+__puya_arc4_router___get_minter_route@17:
+    // smart_contracts/collect_contract.py:428
+    // @arc4.abimethod(readonly=True)
+    txn OnCompletion
+    !
+    assert // OnCompletion is NoOp
+    txn ApplicationID
+    assert // is not creating
+    callsub get_minter
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    retsub
+
+__puya_arc4_router___after_if_else@21:
+    // smart_contracts/collect_contract.py:82
+    // class CollectContract(ARC4Contract):
+    intc_1 // 0
+    retsub
+
+
+// collect_contract.CollectContract.create_application(minter: bytes) -> void:
+create_application:
+    // smart_contracts/collect_contract.py:105-106
+    // @arc4.abimethod(allow_actions=["NoOp"], create="require")
+    // def create_application(self, minter: Account) -> None:
+    proto 1 0
+    // smart_contracts/collect_contract.py:115
+    // self.admin.value = Txn.sender
+    bytec_1 // 0x61646d696e
+    txn Sender
+    app_global_put
+    // smart_contracts/collect_contract.py:116
+    // self.minter.value = minter
+    bytec_3 // 0x6d696e746572
+    frame_dig -1
+    app_global_put
+    // smart_contracts/collect_contract.py:117
+    // self.total_cards.value = UInt64(0)
+    bytec 4 // 0x746f74616c5f6361726473
+    intc_1 // 0
+    app_global_put
+    // smart_contracts/collect_contract.py:118
+    // self.total_minted.value = UInt64(0)
+    bytec 5 // 0x746f74616c5f6d696e746564
+    intc_1 // 0
+    app_global_put
+    // smart_contracts/collect_contract.py:119
+    // self.listing_count.value = UInt64(0)
+    bytec 6 // 0x6c697374696e675f636f756e74
+    intc_1 // 0
+    app_global_put
+    retsub
+
+
+// collect_contract.CollectContract.create_card_template(name: bytes, card_type: bytes, rarity: bytes, description: bytes, max_supply: bytes, price: bytes, mbr_payment: uint64) -> bytes:
+create_card_template:
+    // smart_contracts/collect_contract.py:125-135
+    // @arc4.abimethod
+    // def create_card_template(
+    //     self,
+    //     name: arc4.String,
+    //     card_type: arc4.String,
+    //     rarity: arc4.String,
+    //     description: arc4.String,
+    //     max_supply: arc4.UInt64,
+    //     price: arc4.UInt64,
+    //     mbr_payment: gtxn.PaymentTransaction,
+    // ) -> arc4.UInt64:
+    proto 7 1
+    // smart_contracts/collect_contract.py:157
+    // assert Txn.sender == self.admin.value, "Only admin can create card templates"
+    txn Sender
+    intc_1 // 0
+    bytec_1 // 0x61646d696e
+    app_global_get_ex
+    assert // check self.admin exists
+    ==
+    assert // Only admin can create card templates
+    // smart_contracts/collect_contract.py:158
+    // assert max_supply.native > UInt64(0), "Max supply must be > 0"
+    frame_dig -3
+    btoi
+    dup
+    assert // Max supply must be > 0
+    // smart_contracts/collect_contract.py:159
+    // assert price.native > UInt64(0), "Price must be > 0"
+    frame_dig -2
+    btoi
+    assert // Price must be > 0
+    // smart_contracts/collect_contract.py:160
+    // assert mbr_payment.receiver == Global.current_application_address, "MBR must go to contract"
+    frame_dig -1
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert // MBR must go to contract
+    // smart_contracts/collect_contract.py:161
+    // assert mbr_payment.amount >= UInt64(300_000), "MBR must be at least 0.3 ALGO"
+    frame_dig -1
+    gtxns Amount
+    pushint 300000 // 300000
+    >=
+    assert // MBR must be at least 0.3 ALGO
+    // smart_contracts/collect_contract.py:163
+    // card_id = self.total_cards.value
+    intc_1 // 0
+    bytec 4 // 0x746f74616c5f6361726473
+    app_global_get_ex
+    assert // check self.total_cards exists
+    // smart_contracts/collect_contract.py:165-178
+    // # Create ASA for this card type via inner transaction
+    // asset_txn = itxn.AssetConfig(
+    //     total=max_supply.native,
+    //     decimals=0,
+    //     default_frozen=False,
+    //     manager=Global.current_application_address,
+    //     reserve=Global.current_application_address,
+    //     freeze=Global.current_application_address,
+    //     clawback=Global.current_application_address,
+    //     asset_name=name.native,
+    //     unit_name="F1NFT",
+    //     url="https://f1collect.app/cards",
+    //     fee=Global.min_txn_fee,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/collect_contract.py:177
+    // fee=Global.min_txn_fee,
+    global MinTxnFee
+    // smart_contracts/collect_contract.py:170
+    // manager=Global.current_application_address,
+    global CurrentApplicationAddress
+    // smart_contracts/collect_contract.py:171-173
+    // reserve=Global.current_application_address,
+    // freeze=Global.current_application_address,
+    // clawback=Global.current_application_address,
+    dupn 3
+    // smart_contracts/collect_contract.py:174
+    // asset_name=name.native,
+    frame_dig -7
+    extract 2 0
+    // smart_contracts/collect_contract.py:176
+    // url="https://f1collect.app/cards",
+    pushbytes "https://f1collect.app/cards"
+    itxn_field ConfigAssetURL
+    // smart_contracts/collect_contract.py:175
+    // unit_name="F1NFT",
+    pushbytes "F1NFT"
+    itxn_field ConfigAssetUnitName
+    itxn_field ConfigAssetName
+    itxn_field ConfigAssetClawback
+    itxn_field ConfigAssetFreeze
+    itxn_field ConfigAssetReserve
+    itxn_field ConfigAssetManager
+    // smart_contracts/collect_contract.py:169
+    // default_frozen=False,
+    intc_1 // 0
+    itxn_field ConfigAssetDefaultFrozen
+    // smart_contracts/collect_contract.py:168
+    // decimals=0,
+    intc_1 // 0
+    itxn_field ConfigAssetDecimals
+    uncover 2
+    itxn_field ConfigAssetTotal
+    // smart_contracts/collect_contract.py:165-166
+    // # Create ASA for this card type via inner transaction
+    // asset_txn = itxn.AssetConfig(
+    pushint 3 // acfg
+    itxn_field TypeEnum
+    itxn_field Fee
+    // smart_contracts/collect_contract.py:165-178
+    // # Create ASA for this card type via inner transaction
+    // asset_txn = itxn.AssetConfig(
+    //     total=max_supply.native,
+    //     decimals=0,
+    //     default_frozen=False,
+    //     manager=Global.current_application_address,
+    //     reserve=Global.current_application_address,
+    //     freeze=Global.current_application_address,
+    //     clawback=Global.current_application_address,
+    //     asset_name=name.native,
+    //     unit_name="F1NFT",
+    //     url="https://f1collect.app/cards",
+    //     fee=Global.min_txn_fee,
+    // ).submit()
+    itxn_submit
+    itxn CreatedAssetID
+    // smart_contracts/collect_contract.py:189
+    // asset_id=arc4.UInt64(asset_txn.created_asset.id),
+    itob
+    // smart_contracts/collect_contract.py:180-191
+    // # Store template in box
+    // self.card_templates[arc4.UInt64(card_id)] = CardTemplate(
+    //     name=name,
+    //     card_type=card_type,
+    //     rarity=rarity,
+    //     description=description,
+    //     max_supply=max_supply,
+    //     price=price,
+    //     minted_supply=arc4.UInt64(0),
+    //     asset_id=arc4.UInt64(asset_txn.created_asset.id),
+    //     is_active=arc4.Bool(True),  # noqa: FBT003
+    // )
+    frame_dig -7
+    len
+    intc_3 // 41
+    +
+    dup
+    itob
+    extract 6 2
+    bytec 8 // 0x0029
+    swap
+    concat
+    frame_dig -6
+    len
+    uncover 2
+    +
+    dup
+    itob
+    extract 6 2
+    uncover 2
+    swap
+    concat
+    frame_dig -5
+    len
+    uncover 2
+    +
+    itob
+    extract 6 2
+    concat
+    frame_dig -3
+    concat
+    frame_dig -2
+    concat
+    // smart_contracts/collect_contract.py:188
+    // minted_supply=arc4.UInt64(0),
+    pushbytes 0x0000000000000000
+    // smart_contracts/collect_contract.py:180-191
+    // # Store template in box
+    // self.card_templates[arc4.UInt64(card_id)] = CardTemplate(
+    //     name=name,
+    //     card_type=card_type,
+    //     rarity=rarity,
+    //     description=description,
+    //     max_supply=max_supply,
+    //     price=price,
+    //     minted_supply=arc4.UInt64(0),
+    //     asset_id=arc4.UInt64(asset_txn.created_asset.id),
+    //     is_active=arc4.Bool(True),  # noqa: FBT003
+    // )
+    concat
+    swap
+    concat
+    // smart_contracts/collect_contract.py:190
+    // is_active=arc4.Bool(True),  # noqa: FBT003
+    bytec 9 // 0x80
+    // smart_contracts/collect_contract.py:180-191
+    // # Store template in box
+    // self.card_templates[arc4.UInt64(card_id)] = CardTemplate(
+    //     name=name,
+    //     card_type=card_type,
+    //     rarity=rarity,
+    //     description=description,
+    //     max_supply=max_supply,
+    //     price=price,
+    //     minted_supply=arc4.UInt64(0),
+    //     asset_id=arc4.UInt64(asset_txn.created_asset.id),
+    //     is_active=arc4.Bool(True),  # noqa: FBT003
+    // )
+    concat
+    frame_dig -7
+    concat
+    frame_dig -6
+    concat
+    frame_dig -5
+    concat
+    frame_dig -4
+    concat
+    // smart_contracts/collect_contract.py:180-181
+    // # Store template in box
+    // self.card_templates[arc4.UInt64(card_id)] = CardTemplate(
+    dig 1
+    itob
+    bytec 7 // 0x636172645f
+    dig 1
+    concat
+    // smart_contracts/collect_contract.py:180-191
+    // # Store template in box
+    // self.card_templates[arc4.UInt64(card_id)] = CardTemplate(
+    //     name=name,
+    //     card_type=card_type,
+    //     rarity=rarity,
+    //     description=description,
+    //     max_supply=max_supply,
+    //     price=price,
+    //     minted_supply=arc4.UInt64(0),
+    //     asset_id=arc4.UInt64(asset_txn.created_asset.id),
+    //     is_active=arc4.Bool(True),  # noqa: FBT003
+    // )
+    dup
+    box_del
+    pop
+    uncover 2
+    box_put
+    // smart_contracts/collect_contract.py:193
+    // self.total_cards.value = card_id + UInt64(1)
+    swap
+    intc_0 // 1
+    +
+    bytec 4 // 0x746f74616c5f6361726473
+    swap
+    app_global_put
+    // smart_contracts/collect_contract.py:194
+    // return arc4.UInt64(card_id)
+    retsub
+
+
+// collect_contract.CollectContract.mint_card(card_id: bytes, recipient: bytes) -> bytes:
+mint_card:
+    // smart_contracts/collect_contract.py:200-205
+    // @arc4.abimethod
+    // def mint_card(
+    //     self,
+    //     card_id: arc4.UInt64,
+    //     recipient: Account,
+    // ) -> arc4.UInt64:
+    proto 2 1
+    // smart_contracts/collect_contract.py:220
+    // Txn.sender == self.admin.value or Txn.sender == self.minter.value
+    txn Sender
+    intc_1 // 0
+    bytec_1 // 0x61646d696e
+    app_global_get_ex
+    assert // check self.admin exists
+    ==
+    bnz mint_card_bool_true@2
+    txn Sender
+    intc_1 // 0
+    bytec_3 // 0x6d696e746572
+    app_global_get_ex
+    assert // check self.minter exists
+    ==
+    bz mint_card_bool_false@3
+
+mint_card_bool_true@2:
+    intc_0 // 1
+    b mint_card_bool_merge@4
+
+mint_card_bool_false@3:
+    intc_1 // 0
+
+mint_card_bool_merge@4:
+    // smart_contracts/collect_contract.py:219-221
+    // assert (
+    //     Txn.sender == self.admin.value or Txn.sender == self.minter.value
+    // ), "Only admin or authorized minter can mint"
+    assert // Only admin or authorized minter can mint
+    // smart_contracts/collect_contract.py:223
+    // assert card_id in self.card_templates, "Card template not found"
+    bytec 7 // 0x636172645f
+    frame_dig -2
+    concat
+    dup
+    box_len
+    bury 1
+    assert // Card template not found
+    // smart_contracts/collect_contract.py:225
+    // template = self.card_templates[card_id].copy()
+    dup
+    box_get
+    assert // check self.card_templates entry exists
+    // smart_contracts/collect_contract.py:226
+    // assert template.is_active.native, "Card template is not active"
+    dup
+    pushint 320 // 320
+    getbit
+    bytec_2 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    dup
+    intc_1 // 0
+    getbit
+    assert // Card template is not active
+    // smart_contracts/collect_contract.py:227
+    // assert template.minted_supply.native < template.max_supply.native, "Max supply reached"
+    dig 1
+    extract 24 8 // on error: Index access is out of bounds
+    btoi
+    dig 2
+    extract 8 8 // on error: Index access is out of bounds
+    dup
+    btoi
+    dig 2
+    >
+    assert // Max supply reached
+    // smart_contracts/collect_contract.py:229
+    // asset_id = template.asset_id.native
+    dig 3
+    extract 32 8 // on error: Index access is out of bounds
+    dup
+    btoi
+    // smart_contracts/collect_contract.py:231-238
+    // # Transfer 1 unit via clawback (contract has clawback authority)
+    // itxn.AssetTransfer(
+    //     xfer_asset=Asset(asset_id),
+    //     asset_amount=UInt64(1),
+    //     asset_sender=Global.current_application_address,
+    //     asset_receiver=recipient,
+    //     fee=Global.min_txn_fee,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/collect_contract.py:237
+    // fee=Global.min_txn_fee,
+    global MinTxnFee
+    // smart_contracts/collect_contract.py:235
+    // asset_sender=Global.current_application_address,
+    global CurrentApplicationAddress
+    frame_dig -1
+    itxn_field AssetReceiver
+    itxn_field AssetSender
+    // smart_contracts/collect_contract.py:234
+    // asset_amount=UInt64(1),
+    intc_0 // 1
+    itxn_field AssetAmount
+    dig 1
+    itxn_field XferAsset
+    // smart_contracts/collect_contract.py:231-232
+    // # Transfer 1 unit via clawback (contract has clawback authority)
+    // itxn.AssetTransfer(
+    intc_2 // axfer
+    itxn_field TypeEnum
+    itxn_field Fee
+    // smart_contracts/collect_contract.py:231-238
+    // # Transfer 1 unit via clawback (contract has clawback authority)
+    // itxn.AssetTransfer(
+    //     xfer_asset=Asset(asset_id),
+    //     asset_amount=UInt64(1),
+    //     asset_sender=Global.current_application_address,
+    //     asset_receiver=recipient,
+    //     fee=Global.min_txn_fee,
+    // ).submit()
+    itxn_submit
+    // smart_contracts/collect_contract.py:242
+    // name=template.name,
+    dig 5
+    intc_1 // 0
+    extract_uint16
+    dig 6
+    pushint 2 // 2
+    extract_uint16
+    dig 7
+    uncover 2
+    dig 2
+    substring3
+    // smart_contracts/collect_contract.py:243
+    // card_type=template.card_type,
+    dig 7
+    intc_2 // 4
+    extract_uint16
+    dig 8
+    uncover 3
+    dig 2
+    substring3
+    // smart_contracts/collect_contract.py:244
+    // rarity=template.rarity,
+    dig 8
+    pushint 6 // 6
+    extract_uint16
+    dig 9
+    uncover 3
+    dig 2
+    substring3
+    // smart_contracts/collect_contract.py:245
+    // description=template.description,
+    dig 9
+    len
+    dig 10
+    uncover 3
+    uncover 2
+    substring3
+    // smart_contracts/collect_contract.py:247
+    // price=template.price,
+    uncover 9
+    extract 16 8 // on error: Index access is out of bounds
+    // smart_contracts/collect_contract.py:248
+    // minted_supply=arc4.UInt64(template.minted_supply.native + UInt64(1)),
+    uncover 8
+    intc_0 // 1
+    +
+    itob
+    // smart_contracts/collect_contract.py:240-251
+    // # Update minted_supply in box
+    // self.card_templates[card_id] = CardTemplate(
+    //     name=template.name,
+    //     card_type=template.card_type,
+    //     rarity=template.rarity,
+    //     description=template.description,
+    //     max_supply=template.max_supply,
+    //     price=template.price,
+    //     minted_supply=arc4.UInt64(template.minted_supply.native + UInt64(1)),
+    //     asset_id=template.asset_id,
+    //     is_active=template.is_active,
+    // )
+    dig 5
+    len
+    intc_3 // 41
+    +
+    dup
+    itob
+    extract 6 2
+    bytec 8 // 0x0029
+    swap
+    concat
+    dig 6
+    len
+    uncover 2
+    +
+    dup
+    itob
+    extract 6 2
+    uncover 2
+    swap
+    concat
+    dig 5
+    len
+    uncover 2
+    +
+    itob
+    extract 6 2
+    concat
+    uncover 9
+    concat
+    uncover 2
+    concat
+    swap
+    concat
+    uncover 6
+    concat
+    uncover 6
+    concat
+    uncover 4
+    concat
+    uncover 3
+    concat
+    uncover 2
+    concat
+    swap
+    concat
+    dig 2
+    box_del
+    pop
+    uncover 2
+    swap
+    box_put
+    // smart_contracts/collect_contract.py:253
+    // self.total_minted.value = self.total_minted.value + UInt64(1)
+    intc_1 // 0
+    bytec 5 // 0x746f74616c5f6d696e746564
+    app_global_get_ex
+    assert // check self.total_minted exists
+    intc_0 // 1
+    +
+    bytec 5 // 0x746f74616c5f6d696e746564
+    swap
+    app_global_put
+    // smart_contracts/collect_contract.py:254
+    // return arc4.UInt64(asset_id)
+    itob
+    retsub
+
+
+// collect_contract.CollectContract.burn_card(asset_id: bytes, burn_txn: uint64) -> void:
+burn_card:
+    // smart_contracts/collect_contract.py:260-265
+    // @arc4.abimethod
+    // def burn_card(
+    //     self,
+    //     asset_id: arc4.UInt64,
+    //     burn_txn: gtxn.AssetTransferTransaction,
+    // ) -> None:
+    proto 2 0
+    // smart_contracts/collect_contract.py:274
+    // assert burn_txn.asset_receiver == Global.current_application_address, "NFT must be sent to contract to burn"
+    frame_dig -1
+    gtxns AssetReceiver
+    global CurrentApplicationAddress
+    ==
+    assert // NFT must be sent to contract to burn
+    // smart_contracts/collect_contract.py:275
+    // assert burn_txn.asset_amount == UInt64(1), "Must burn exactly 1 NFT"
+    frame_dig -1
+    gtxns AssetAmount
+    intc_0 // 1
+    ==
+    assert // Must burn exactly 1 NFT
+    // smart_contracts/collect_contract.py:276
+    // assert burn_txn.xfer_asset.id == asset_id.native, "Asset ID mismatch"
+    frame_dig -1
+    gtxns XferAsset
+    frame_dig -2
+    btoi
+    ==
+    assert // Asset ID mismatch
+    // smart_contracts/collect_contract.py:278-279
+    // # Record burn status on-chain
+    // self.burned_assets[asset_id] = arc4.Bool(True)  # noqa: FBT003
+    bytec 11 // 0x6275726e5f
+    frame_dig -2
+    concat
+    bytec 9 // 0x80
+    box_put
+    retsub
+
+
+// collect_contract.CollectContract.list_for_sale(asset_id: bytes, card_id: bytes, sale_price: bytes, deposit_txn: uint64) -> bytes:
+list_for_sale:
+    // smart_contracts/collect_contract.py:285-292
+    // @arc4.abimethod
+    // def list_for_sale(
+    //     self,
+    //     asset_id: arc4.UInt64,
+    //     card_id: arc4.UInt64,
+    //     sale_price: arc4.UInt64,
+    //     deposit_txn: gtxn.AssetTransferTransaction,
+    // ) -> arc4.UInt64:
+    proto 4 1
+    // smart_contracts/collect_contract.py:306
+    // assert deposit_txn.asset_receiver == Global.current_application_address, "NFT must be escrowed to contract"
+    frame_dig -1
+    gtxns AssetReceiver
+    global CurrentApplicationAddress
+    ==
+    assert // NFT must be escrowed to contract
+    // smart_contracts/collect_contract.py:307
+    // assert deposit_txn.asset_amount == UInt64(1), "Must deposit exactly 1 NFT"
+    frame_dig -1
+    gtxns AssetAmount
+    intc_0 // 1
+    ==
+    assert // Must deposit exactly 1 NFT
+    // smart_contracts/collect_contract.py:308
+    // assert deposit_txn.xfer_asset.id == asset_id.native, "Asset ID mismatch"
+    frame_dig -1
+    gtxns XferAsset
+    frame_dig -4
+    btoi
+    ==
+    assert // Asset ID mismatch
+    // smart_contracts/collect_contract.py:309
+    // assert sale_price.native > UInt64(0), "Sale price must be > 0"
+    frame_dig -2
+    btoi
+    assert // Sale price must be > 0
+    // smart_contracts/collect_contract.py:311
+    // listing_id = self.listing_count.value
+    intc_1 // 0
+    bytec 6 // 0x6c697374696e675f636f756e74
+    app_global_get_ex
+    assert // check self.listing_count exists
+    // smart_contracts/collect_contract.py:314
+    // seller=arc4.Address(Txn.sender),
+    txn Sender
+    // smart_contracts/collect_contract.py:313-319
+    // self.listings[arc4.UInt64(listing_id)] = Listing(
+    //     seller=arc4.Address(Txn.sender),
+    //     card_id=card_id,
+    //     asset_id=asset_id,
+    //     price=sale_price,
+    //     is_active=arc4.Bool(True),  # noqa: FBT003
+    // )
+    frame_dig -3
+    concat
+    frame_dig -4
+    concat
+    frame_dig -2
+    concat
+    // smart_contracts/collect_contract.py:318
+    // is_active=arc4.Bool(True),  # noqa: FBT003
+    bytec 9 // 0x80
+    // smart_contracts/collect_contract.py:313-319
+    // self.listings[arc4.UInt64(listing_id)] = Listing(
+    //     seller=arc4.Address(Txn.sender),
+    //     card_id=card_id,
+    //     asset_id=asset_id,
+    //     price=sale_price,
+    //     is_active=arc4.Bool(True),  # noqa: FBT003
+    // )
+    concat
+    // smart_contracts/collect_contract.py:313
+    // self.listings[arc4.UInt64(listing_id)] = Listing(
+    dig 1
+    itob
+    bytec 10 // 0x6c6973745f
+    dig 1
+    concat
+    // smart_contracts/collect_contract.py:313-319
+    // self.listings[arc4.UInt64(listing_id)] = Listing(
+    //     seller=arc4.Address(Txn.sender),
+    //     card_id=card_id,
+    //     asset_id=asset_id,
+    //     price=sale_price,
+    //     is_active=arc4.Bool(True),  # noqa: FBT003
+    // )
+    uncover 2
+    box_put
+    // smart_contracts/collect_contract.py:321
+    // self.listing_count.value = listing_id + UInt64(1)
+    swap
+    intc_0 // 1
+    +
+    bytec 6 // 0x6c697374696e675f636f756e74
+    swap
+    app_global_put
+    // smart_contracts/collect_contract.py:322
+    // return arc4.UInt64(listing_id)
+    retsub
+
+
+// collect_contract.CollectContract.cancel_listing(listing_id: bytes) -> void:
+cancel_listing:
+    // smart_contracts/collect_contract.py:324-325
+    // @arc4.abimethod
+    // def cancel_listing(self, listing_id: arc4.UInt64) -> None:
+    proto 1 0
+    // smart_contracts/collect_contract.py:333
+    // assert listing_id in self.listings, "Listing not found"
+    bytec 10 // 0x6c6973745f
+    frame_dig -1
+    concat
+    dupn 2
+    box_len
+    bury 1
+    assert // Listing not found
+    // smart_contracts/collect_contract.py:334
+    // listing = self.listings[listing_id].copy()
+    box_get
+    swap
+    dup
+    uncover 2
+    assert // check self.listings entry exists
+    // smart_contracts/collect_contract.py:335
+    // assert listing.is_active.native, "Listing is already inactive"
+    dup
+    pushint 448 // 448
+    getbit
+    bytec_2 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    intc_1 // 0
+    getbit
+    assert // Listing is already inactive
+    // smart_contracts/collect_contract.py:337
+    // listing.seller.native == Txn.sender or Txn.sender == self.admin.value
+    extract 0 32 // on error: Index access is out of bounds
+    dup
+    txn Sender
+    ==
+    bnz cancel_listing_bool_true@2
+    txn Sender
+    intc_1 // 0
+    bytec_1 // 0x61646d696e
+    app_global_get_ex
+    assert // check self.admin exists
+    ==
+    bz cancel_listing_bool_false@3
+
+cancel_listing_bool_true@2:
+    intc_0 // 1
+    b cancel_listing_bool_merge@4
+
+cancel_listing_bool_false@3:
+    intc_1 // 0
+
+cancel_listing_bool_merge@4:
+    // smart_contracts/collect_contract.py:336-338
+    // assert (
+    //     listing.seller.native == Txn.sender or Txn.sender == self.admin.value
+    // ), "Only seller or admin can cancel"
+    assert // Only seller or admin can cancel
+    // smart_contracts/collect_contract.py:340-346
+    // # Return NFT to seller
+    // itxn.AssetTransfer(
+    //     xfer_asset=Asset(listing.asset_id.native),
+    //     asset_amount=UInt64(1),
+    //     asset_receiver=listing.seller.native,
+    //     fee=Global.min_txn_fee,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/collect_contract.py:345
+    // fee=Global.min_txn_fee,
+    global MinTxnFee
+    // smart_contracts/collect_contract.py:342
+    // xfer_asset=Asset(listing.asset_id.native),
+    frame_dig 1
+    dup
+    cover 2
+    extract 40 8 // on error: Index access is out of bounds
+    dup
+    btoi
+    frame_dig 2
+    dup
+    cover 4
+    itxn_field AssetReceiver
+    // smart_contracts/collect_contract.py:343
+    // asset_amount=UInt64(1),
+    intc_0 // 1
+    itxn_field AssetAmount
+    itxn_field XferAsset
+    // smart_contracts/collect_contract.py:340-341
+    // # Return NFT to seller
+    // itxn.AssetTransfer(
+    intc_2 // axfer
+    itxn_field TypeEnum
+    swap
+    itxn_field Fee
+    // smart_contracts/collect_contract.py:340-346
+    // # Return NFT to seller
+    // itxn.AssetTransfer(
+    //     xfer_asset=Asset(listing.asset_id.native),
+    //     asset_amount=UInt64(1),
+    //     asset_receiver=listing.seller.native,
+    //     fee=Global.min_txn_fee,
+    // ).submit()
+    itxn_submit
+    // smart_contracts/collect_contract.py:351
+    // card_id=listing.card_id,
+    dig 2
+    extract 32 8 // on error: Index access is out of bounds
+    // smart_contracts/collect_contract.py:353
+    // price=listing.price,
+    uncover 3
+    extract 48 8 // on error: Index access is out of bounds
+    // smart_contracts/collect_contract.py:348-355
+    // # Deactivate listing
+    // self.listings[listing_id] = Listing(
+    //     seller=listing.seller,
+    //     card_id=listing.card_id,
+    //     asset_id=listing.asset_id,
+    //     price=listing.price,
+    //     is_active=arc4.Bool(False),  # noqa: FBT003
+    // )
+    uncover 3
+    uncover 2
+    concat
+    uncover 2
+    concat
+    swap
+    concat
+    // smart_contracts/collect_contract.py:354
+    // is_active=arc4.Bool(False),  # noqa: FBT003
+    bytec_2 // 0x00
+    // smart_contracts/collect_contract.py:348-355
+    // # Deactivate listing
+    // self.listings[listing_id] = Listing(
+    //     seller=listing.seller,
+    //     card_id=listing.card_id,
+    //     asset_id=listing.asset_id,
+    //     price=listing.price,
+    //     is_active=arc4.Bool(False),  # noqa: FBT003
+    // )
+    concat
+    frame_dig 0
+    swap
+    box_put
+    retsub
+
+
+// collect_contract.CollectContract.set_minter(new_minter: bytes) -> void:
+set_minter:
+    // smart_contracts/collect_contract.py:361-362
+    // @arc4.abimethod
+    // def set_minter(self, new_minter: Account) -> None:
+    proto 1 0
+    // smart_contracts/collect_contract.py:364
+    // assert Txn.sender == self.admin.value, "Only admin can update minter"
+    txn Sender
+    intc_1 // 0
+    bytec_1 // 0x61646d696e
+    app_global_get_ex
+    assert // check self.admin exists
+    ==
+    assert // Only admin can update minter
+    // smart_contracts/collect_contract.py:365
+    // self.minter.value = new_minter
+    bytec_3 // 0x6d696e746572
+    frame_dig -1
+    app_global_put
+    retsub
+
+
+// collect_contract.CollectContract.deactivate_card(card_id: bytes) -> void:
+deactivate_card:
+    // smart_contracts/collect_contract.py:367-368
+    // @arc4.abimethod
+    // def deactivate_card(self, card_id: arc4.UInt64) -> None:
+    proto 1 0
+    // smart_contracts/collect_contract.py:370
+    // assert Txn.sender == self.admin.value, "Only admin"
+    txn Sender
+    intc_1 // 0
+    bytec_1 // 0x61646d696e
+    app_global_get_ex
+    assert // check self.admin exists
+    ==
+    assert // Only admin
+    // smart_contracts/collect_contract.py:371
+    // assert card_id in self.card_templates, "Card not found"
+    bytec 7 // 0x636172645f
+    frame_dig -1
+    concat
+    dup
+    box_len
+    bury 1
+    assert // Card not found
+    // smart_contracts/collect_contract.py:372
+    // template = self.card_templates[card_id].copy()
+    dup
+    box_get
+    assert // check self.card_templates entry exists
+    // smart_contracts/collect_contract.py:374
+    // name=template.name,
+    dup
+    intc_1 // 0
+    extract_uint16
+    dig 1
+    pushint 2 // 2
+    extract_uint16
+    dig 2
+    uncover 2
+    dig 2
+    substring3
+    // smart_contracts/collect_contract.py:375
+    // card_type=template.card_type,
+    dig 2
+    intc_2 // 4
+    extract_uint16
+    dig 3
+    uncover 3
+    dig 2
+    substring3
+    // smart_contracts/collect_contract.py:376
+    // rarity=template.rarity,
+    dig 3
+    pushint 6 // 6
+    extract_uint16
+    dig 4
+    uncover 3
+    dig 2
+    substring3
+    // smart_contracts/collect_contract.py:377
+    // description=template.description,
+    dig 4
+    len
+    dig 5
+    uncover 3
+    uncover 2
+    substring3
+    // smart_contracts/collect_contract.py:378
+    // max_supply=template.max_supply,
+    dig 4
+    extract 8 8 // on error: Index access is out of bounds
+    // smart_contracts/collect_contract.py:379
+    // price=template.price,
+    dig 5
+    extract 16 8 // on error: Index access is out of bounds
+    // smart_contracts/collect_contract.py:380
+    // minted_supply=template.minted_supply,
+    dig 6
+    extract 24 8 // on error: Index access is out of bounds
+    // smart_contracts/collect_contract.py:381
+    // asset_id=template.asset_id,
+    uncover 7
+    extract 32 8 // on error: Index access is out of bounds
+    // smart_contracts/collect_contract.py:373-383
+    // self.card_templates[card_id] = CardTemplate(
+    //     name=template.name,
+    //     card_type=template.card_type,
+    //     rarity=template.rarity,
+    //     description=template.description,
+    //     max_supply=template.max_supply,
+    //     price=template.price,
+    //     minted_supply=template.minted_supply,
+    //     asset_id=template.asset_id,
+    //     is_active=arc4.Bool(False),  # noqa: FBT003
+    // )
+    dig 7
+    len
+    intc_3 // 41
+    +
+    dup
+    itob
+    extract 6 2
+    bytec 8 // 0x0029
+    swap
+    concat
+    dig 8
+    len
+    uncover 2
+    +
+    dup
+    itob
+    extract 6 2
+    uncover 2
+    swap
+    concat
+    dig 7
+    len
+    uncover 2
+    +
+    itob
+    extract 6 2
+    concat
+    uncover 4
+    concat
+    uncover 3
+    concat
+    uncover 2
+    concat
+    swap
+    concat
+    // smart_contracts/collect_contract.py:382
+    // is_active=arc4.Bool(False),  # noqa: FBT003
+    bytec_2 // 0x00
+    // smart_contracts/collect_contract.py:373-383
+    // self.card_templates[card_id] = CardTemplate(
+    //     name=template.name,
+    //     card_type=template.card_type,
+    //     rarity=template.rarity,
+    //     description=template.description,
+    //     max_supply=template.max_supply,
+    //     price=template.price,
+    //     minted_supply=template.minted_supply,
+    //     asset_id=template.asset_id,
+    //     is_active=arc4.Bool(False),  # noqa: FBT003
+    // )
+    concat
+    uncover 4
+    concat
+    uncover 3
+    concat
+    uncover 2
+    concat
+    swap
+    concat
+    dig 1
+    box_del
+    pop
+    box_put
+    retsub
+
+
+// collect_contract.CollectContract.get_card_template(card_id: bytes) -> bytes:
+get_card_template:
+    // smart_contracts/collect_contract.py:389-390
+    // @arc4.abimethod(readonly=True)
+    // def get_card_template(self, card_id: arc4.UInt64) -> CardTemplate:
+    proto 1 1
+    // smart_contracts/collect_contract.py:392
+    // assert card_id in self.card_templates, "Card template not found"
+    bytec 7 // 0x636172645f
+    frame_dig -1
+    concat
+    dup
+    box_len
+    bury 1
+    assert // Card template not found
+    // smart_contracts/collect_contract.py:393
+    // return self.card_templates[card_id]
+    box_get
+    assert // check self.card_templates entry exists
+    retsub
+
+
+// collect_contract.CollectContract.get_total_cards() -> bytes:
+get_total_cards:
+    // smart_contracts/collect_contract.py:395-396
+    // @arc4.abimethod(readonly=True)
+    // def get_total_cards(self) -> arc4.UInt64:
+    proto 0 1
+    // smart_contracts/collect_contract.py:398
+    // return arc4.UInt64(self.total_cards.value)
+    intc_1 // 0
+    bytec 4 // 0x746f74616c5f6361726473
+    app_global_get_ex
+    assert // check self.total_cards exists
+    itob
+    retsub
+
+
+// collect_contract.CollectContract.get_total_minted() -> bytes:
+get_total_minted:
+    // smart_contracts/collect_contract.py:400-401
+    // @arc4.abimethod(readonly=True)
+    // def get_total_minted(self) -> arc4.UInt64:
+    proto 0 1
+    // smart_contracts/collect_contract.py:403
+    // return arc4.UInt64(self.total_minted.value)
+    intc_1 // 0
+    bytec 5 // 0x746f74616c5f6d696e746564
+    app_global_get_ex
+    assert // check self.total_minted exists
+    itob
+    retsub
+
+
+// collect_contract.CollectContract.is_burned(asset_id: bytes) -> bytes:
+is_burned:
+    // smart_contracts/collect_contract.py:405-406
+    // @arc4.abimethod(readonly=True)
+    // def is_burned(self, asset_id: arc4.UInt64) -> arc4.Bool:
+    proto 1 1
+    // smart_contracts/collect_contract.py:408
+    // if asset_id in self.burned_assets:
+    bytec 11 // 0x6275726e5f
+    frame_dig -1
+    concat
+    dup
+    box_len
+    bury 1
+    bz is_burned_after_if_else@2
+    // smart_contracts/collect_contract.py:409
+    // return self.burned_assets[asset_id]
+    frame_dig 0
+    box_get
+    assert // check self.burned_assets entry exists
+    swap
+    retsub
+
+is_burned_after_if_else@2:
+    // smart_contracts/collect_contract.py:410
+    // return arc4.Bool(False)  # noqa: FBT003
+    bytec_2 // 0x00
+    swap
+    retsub
+
+
+// collect_contract.CollectContract.get_listing(listing_id: bytes) -> bytes:
+get_listing:
+    // smart_contracts/collect_contract.py:412-413
+    // @arc4.abimethod(readonly=True)
+    // def get_listing(self, listing_id: arc4.UInt64) -> Listing:
+    proto 1 1
+    // smart_contracts/collect_contract.py:415
+    // assert listing_id in self.listings, "Listing not found"
+    bytec 10 // 0x6c6973745f
+    frame_dig -1
+    concat
+    dup
+    box_len
+    bury 1
+    assert // Listing not found
+    // smart_contracts/collect_contract.py:416
+    // return self.listings[listing_id]
+    box_get
+    assert // check self.listings entry exists
+    retsub
+
+
+// collect_contract.CollectContract.get_total_listings() -> bytes:
+get_total_listings:
+    // smart_contracts/collect_contract.py:418-419
+    // @arc4.abimethod(readonly=True)
+    // def get_total_listings(self) -> arc4.UInt64:
+    proto 0 1
+    // smart_contracts/collect_contract.py:421
+    // return arc4.UInt64(self.listing_count.value)
+    intc_1 // 0
+    bytec 6 // 0x6c697374696e675f636f756e74
+    app_global_get_ex
+    assert // check self.listing_count exists
+    itob
+    retsub
+
+
+// collect_contract.CollectContract.get_admin() -> bytes:
+get_admin:
+    // smart_contracts/collect_contract.py:423-424
+    // @arc4.abimethod(readonly=True)
+    // def get_admin(self) -> arc4.Address:
+    proto 0 1
+    // smart_contracts/collect_contract.py:426
+    // return arc4.Address(self.admin.value)
+    intc_1 // 0
+    bytec_1 // 0x61646d696e
+    app_global_get_ex
+    assert // check self.admin exists
+    retsub
+
+
+// collect_contract.CollectContract.get_minter() -> bytes:
+get_minter:
+    // smart_contracts/collect_contract.py:428-429
+    // @arc4.abimethod(readonly=True)
+    // def get_minter(self) -> arc4.Address:
+    proto 0 1
+    // smart_contracts/collect_contract.py:431
+    // return arc4.Address(self.minter.value)
+    intc_1 // 0
+    bytec_3 // 0x6d696e746572
+    app_global_get_ex
+    assert // check self.minter exists
+    retsub

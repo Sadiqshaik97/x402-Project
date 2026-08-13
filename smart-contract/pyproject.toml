@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "smart-contract"
+version = "0.1.0"
+description = "F1 Collect Algorand Smart Contract for minting F1 NFT cards via x402 micropayments"
+authors = ["F1 Collect Team"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+algokit-utils = "^2.2.0"
+pyteal = "^0.25.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  --color-f1-red: #E10600;
+  --color-f1-red-dark: #b80500;
+  --color-f1-dark: #15151e;
+  --color-f1-darker: #0d0d14;
+  
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  
+  --color-card-teal: #00d2be;
+  --color-card-blue: #005aff;
+  --color-card-purple: #9000ff;
+  --color-card-gold: #ffb800;
+}
+
+@layer base {
+  :root {
+    --background: #0d0d14;
+    --foreground: #ffffff;
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+  }
+}
+
+@layer utilities {
+  .halftone-red {
+    background: 
+      linear-gradient(90deg, rgba(225, 6, 0, 1) 0%, rgba(225, 6, 0, 0.8) 50%, rgba(0, 0, 0, 0.5) 100%),
+      radial-gradient(circle, #000 1px, transparent 1px) 0 0 / 8px 8px;
+    background-color: #E10600;
+  }
+  
+  .halftone-teal {
+    background: 
+      linear-gradient(90deg, rgba(0, 210, 190, 1) 0%, rgba(0, 210, 190, 0.8) 50%, rgba(0, 0, 0, 0.5) 100%),
+      radial-gradient(circle, #000 1px, transparent 1px) 0 0 / 8px 8px;
+    background-color: #00d2be;
+  }
+  
+  .halftone-blue {
+    background: 
+      linear-gradient(90deg, rgba(0, 90, 255, 1) 0%, rgba(0, 90, 255, 0.8) 50%, rgba(0, 0, 0, 0.5) 100%),
+      radial-gradient(circle, #000 1px, transparent 1px) 0 0 / 8px 8px;
+    background-color: #005aff;
+  }
+
+  .halftone-gold {
+    background: 
+      linear-gradient(90deg, rgba(255, 184, 0, 1) 0%, rgba(255, 184, 0, 0.8) 50%, rgba(0, 0, 0, 0.5) 100%),
+      radial-gradient(circle, #000 1px, transparent 1px) 0 0 / 8px 8px;
+    background-color: #ffb800;
+  }
+}

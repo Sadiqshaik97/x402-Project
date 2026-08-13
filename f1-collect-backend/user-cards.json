@@ -1,23 +1,5 @@
 [
   {
-    "driver": "Fernando Alonso",
-    "team": "Aston Martin",
-    "number": 14,
-    "rarity": "Rare",
-    "topSpeed": 349,
-    "acceleration": 2.3,
-    "corneringG": 4.85,
-    "championships": 2,
-    "imageUrl": "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=600&q=80",
-    "id": "F1-BASIC-1786605240593-469",
-    "mintedAt": "2026-08-13T07:14:00.593Z",
-    "packType": "Basic",
-    "owner": "6XFYYM7O4HNHOQJULIBVJY6LFC4UNS6KWUIT23QADOS2VVFB4TYZBHDOJA",
-    "assetId": 769177884,
-    "txId": "VNY25B6MRX2M7RCBIAAMPS6UABQBNL6X7RWVFHKHFZDE7L55CYTQ",
-    "loraUrl": "https://testnet.lora.algokit.io/transaction/VNY25B6MRX2M7RCBIAAMPS6UABQBNL6X7RWVFHKHFZDE7L55CYTQ"
-  },
-  {
     "driver": "Lando Norris",
     "team": "McLaren",
     "number": 4,
@@ -52,5 +34,41 @@
     "assetId": 769178458,
     "txId": "GKT7ELH5AV6XAAUIWGU35LYPTLPM7C3FJ2QGA2C3GOLR7UD3F6RQ",
     "loraUrl": "https://testnet.lora.algokit.io/transaction/GKT7ELH5AV6XAAUIWGU35LYPTLPM7C3FJ2QGA2C3GOLR7UD3F6RQ"
+  },
+  {
+    "driver": "Fernando Alonso",
+    "team": "Aston Martin",
+    "number": 14,
+    "rarity": "Rare",
+    "topSpeed": 349,
+    "acceleration": 2.3,
+    "corneringG": 4.85,
+    "championships": 2,
+    "imageUrl": "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=600&q=80",
+    "id": "F1-BASIC-1786608436280-143",
+    "mintedAt": "2026-08-13T08:07:16.280Z",
+    "packType": "Basic",
+    "owner": "6XFYYM7O4HNHOQJULIBVJY6LFC4UNS6KWUIT23QADOS2VVFB4TYZBHDOJA",
+    "assetId": 769180483,
+    "txId": "KLFJFLQUSTHLXOEXNUAIT5BU6DQ3JEOTQRAOFQBO2UDHDAXRSLAA",
+    "loraUrl": "https://testnet.lora.algokit.io/transaction/KLFJFLQUSTHLXOEXNUAIT5BU6DQ3JEOTQRAOFQBO2UDHDAXRSLAA"
+  },
+  {
+    "driver": "Pierre Gasly",
+    "team": "Alpine",
+    "number": 10,
+    "rarity": "Common",
+    "topSpeed": 345,
+    "acceleration": 2.4,
+    "corneringG": 4.7,
+    "championships": 0,
+    "imageUrl": "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80",
+    "id": "F1-BASIC-1786608449864-517",
+    "mintedAt": "2026-08-13T08:07:29.864Z",
+    "packType": "Basic",
+    "owner": "6XFYYM7O4HNHOQJULIBVJY6LFC4UNS6KWUIT23QADOS2VVFB4TYZBHDOJA",
+    "assetId": 769180496,
+    "txId": "6JT2RTYG5I3LMNXQ3B733VM3OZMSOL3FXH23Z6DRB2FJSXQ6HIAA",
+    "loraUrl": "https://testnet.lora.algokit.io/transaction/6JT2RTYG5I3LMNXQ3B733VM3OZMSOL3FXH23Z6DRB2FJSXQ6HIAA"
   }
 ]
